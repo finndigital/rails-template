@@ -51,3 +51,12 @@ end
 
 environment "config.middleware.use Rack::LiveReload", env: "development" 
 environment "config.action_mailer.delivery_method = :file", env: "development"
+
+copy_file "../config/Guardfile", "Guardfile"
+copy_file "../config/Procfile.dev", "Procfile.dev"
+
+create_file ".env.sample" do
+  <<-CODE
+  basic_config=goes_here
+  CODE
+end
