@@ -3,10 +3,11 @@
 #
 puts "Updating Gemfile"
 
-gsub_file 'Gemfile', /gem 'sqlite'\n/, ''
+gsub_file 'Gemfile', /gem 'sqlite3'\n/, ''
 gem 'pg'
 
 gem "puma"
+gem "activeadmin", github: "gregbell/active_admin"
 
 gem "compass-rails", "~> 2.0.alpha.0"
 gem "foundation-rails"
@@ -56,7 +57,7 @@ environment "config.action_mailer.delivery_method = :file", env: "development"
 
 copy_file File.expand_path("../config/Guardfile", File.dirname(__FILE__)), "Guardfile"
 copy_file File.expand_path("../config/Procfile.dev", File.dirname(__FILE__)), "Procfile.dev"
-# todo: create template files for rspec and haml
+# todo: create template files for rspec, database.yml and haml
 
 create_file ".env.sample" do
   <<-CODE
@@ -66,4 +67,5 @@ end
 
 run "bundle install"
 
+remove_file "app/assets/views/layout/application.html.erb"
 generate :"foundation:install", "--haml", "-f"
