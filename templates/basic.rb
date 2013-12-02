@@ -49,16 +49,16 @@ gem_group :production do
   gem "newrelic_rpm"
 end
 
-bundle install
+after_bundler do
+  environment "config.middleware.use Rack::LiveReload", env: "development" 
+  environment "config.action_mailer.delivery_method = :file", env: "development"
 
-environment "config.middleware.use Rack::LiveReload", env: "development" 
-environment "config.action_mailer.delivery_method = :file", env: "development"
+  copy_file File.expand_path("../config/Guardfile", File.dirname(__FILE__)), "Guardfile"
+  copy_file File.expand_path("../config/Procfile.dev", File.dirname(__FILE__)), "Procfile.dev"
 
-copy_file File.expand_path("../config/Guardfile", File.dirname(__FILE__)), "Guardfile"
-copy_file File.expand_path("../config/Procfile.dev", File.dirname(__FILE__)), "Procfile.dev"
-
-create_file ".env.sample" do
-  <<-CODE
-  basic_config=goes_here
-  CODE
+  create_file ".env.sample" do
+    <<-CODE
+    basic_config=goes_here
+    CODE
+  end
 end
