@@ -56,6 +56,7 @@ environment "config.action_mailer.delivery_method = :file", env: "development"
 
 copy_file File.expand_path("../config/Guardfile", File.dirname(__FILE__)), "Guardfile"
 copy_file File.expand_path("../config/Procfile.dev", File.dirname(__FILE__)), "Procfile.dev"
+# todo: create template files for rspec and haml
 
 create_file ".env.sample" do
   <<-CODE
@@ -63,5 +64,6 @@ create_file ".env.sample" do
   CODE
 end
 
-puts "Installing bundle"
-puts "Success" if system("bundle install")
+run "bundle install"
+
+generate :"foundation:install"
