@@ -66,4 +66,4 @@ end
 
 run "bundle install"
 
-generate :"foundation:install"
+generate :"foundation:install", "--haml", "-f"
