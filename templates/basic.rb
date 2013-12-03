@@ -4,6 +4,7 @@
 puts "Updating Gemfile"
 
 gsub_file 'Gemfile', /gem 'sqlite3'\n/, ''
+gsub_file 'Gemfile', /# Use sqlite3 as the database for Active Record\n/, ''
 gem 'pg'
 
 gem "puma"
@@ -55,7 +56,6 @@ end
 run "bundle install"
 
 remove_file "app/assets/views/layout/application.html.erb"
-generate :"foundation:install", "--haml", "-f"
 
 environment "config.middleware.use Rack::LiveReload", env: "development" 
 environment "config.action_mailer.delivery_method = :file", env: "development"
@@ -65,6 +65,8 @@ remove_file "config/database.yml"
 copy_file File.expand_path("../config/Guardfile", File.dirname(__FILE__)), "Guardfile"
 copy_file File.expand_path("../config/Procfile.dev", File.dirname(__FILE__)), "Procfile.dev"
 copy_file File.expand_path("../config/database.yml", File.dirname(__FILE__)), "config/database.yml"
+copy_file File.expand_path("../config/.rspec", File.dirname(__FILE__)), ".rspec"
+copy_file File.expand_path("../config/spec/spec_helper.rb", File.dirname(__FILE__)), "spec/spec_helper.rb"
 # todo: create template files for rspec, database.yml and haml
 
 create_file ".env.sample" do
@@ -73,3 +75,7 @@ create_file ".env.sample" do
   CODE
 end
 
+generate :"foundation:install", "--haml", "-f"
+generate :"rspec:install"
+generate :"simple_form:install"
+generate :"active_admin:install"
