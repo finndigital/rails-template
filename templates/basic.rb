@@ -65,8 +65,6 @@ remove_file "config/database.yml"
 copy_file File.expand_path("../config/Guardfile", File.dirname(__FILE__)), "Guardfile"
 copy_file File.expand_path("../config/Procfile.dev", File.dirname(__FILE__)), "Procfile.dev"
 copy_file File.expand_path("../config/database.yml", File.dirname(__FILE__)), "config/database.yml"
-copy_file File.expand_path("../config/.rspec", File.dirname(__FILE__)), ".rspec"
-copy_file File.expand_path("../config/spec/spec_helper.rb", File.dirname(__FILE__)), "spec/spec_helper.rb"
 # todo: create template files for rspec, database.yml and haml
 
 create_file ".env.sample" do
@@ -79,3 +77,8 @@ generate :"foundation:install", "--haml", "-f"
 generate :"rspec:install"
 generate :"simple_form:install"
 generate :"active_admin:install"
+
+run "rake db:migrate"
+
+copy_file File.expand_path("../config/.rspec", File.dirname(__FILE__)), ".rspec"
+copy_file File.expand_path("../config/spec/spec_helper.rb", File.dirname(__FILE__)), "spec/spec_helper.rb"
