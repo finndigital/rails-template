@@ -78,7 +78,5 @@ generate :"rspec:install"
 generate :"simple_form:install"
 generate :"active_admin:install"
 
-run "rake db:migrate"
-
 copy_file File.expand_path("../config/.rspec", File.dirname(__FILE__)), ".rspec"
 copy_file File.expand_path("../config/spec/spec_helper.rb", File.dirname(__FILE__)), "spec/spec_helper.rb"
