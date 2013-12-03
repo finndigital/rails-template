@@ -52,11 +52,19 @@ gem_group :production do
   gem "newrelic_rpm"
 end
 
+run "bundle install"
+
+remove_file "app/assets/views/layout/application.html.erb"
+generate :"foundation:install", "--haml", "-f"
+
 environment "config.middleware.use Rack::LiveReload", env: "development" 
 environment "config.action_mailer.delivery_method = :file", env: "development"
 
+remove_file "config/database.yml"
+
 copy_file File.expand_path("../config/Guardfile", File.dirname(__FILE__)), "Guardfile"
 copy_file File.expand_path("../config/Procfile.dev", File.dirname(__FILE__)), "Procfile.dev"
+copy_file File.expand_path("../config/database.yml", File.dirname(__FILE__)), "config/database.yml"
 # todo: create template files for rspec, database.yml and haml
 
 create_file ".env.sample" do
@@ -65,7 +73,3 @@ create_file ".env.sample" do
   CODE
 end
 
-run "bundle install"
-
-remove_file "app/assets/views/layout/application.html.erb"
-generate :"foundation:install", "--haml", "-f"
